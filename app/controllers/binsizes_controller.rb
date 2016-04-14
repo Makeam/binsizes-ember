@@ -69,6 +69,6 @@ class BinsizesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def binsize_params
-      params.require(:binsize).permit(:weight, :const, :packages, :avg)
+      params.require(:binsize).permit(:weight, :const, :avg)
     end
 end

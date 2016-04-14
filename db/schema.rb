@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414150414) do
+ActiveRecord::Schema.define(version: 20160414174149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,10 +19,22 @@ ActiveRecord::Schema.define(version: 20160414150414) do
   create_table "binsizes", force: :cascade do |t|
     t.integer  "weight"
     t.boolean  "const",      default: false
-    t.json     "packages"
     t.integer  "avg"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
 
+  create_table "packages", force: :cascade do |t|
+    t.integer  "val",        default: 0
+    t.string   "unit",       default: ""
+    t.integer  "bytes",      default: 0
+    t.integer  "percent",    default: 0
+    t.integer  "binsize_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "packages", ["binsize_id"], name: "index_packages_on_binsize_id", using: :btree
+
+  add_foreign_key "packages", "binsizes"
 end
