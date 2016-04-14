@@ -1,0 +1,2 @@
+module BinsizesHelper
+end

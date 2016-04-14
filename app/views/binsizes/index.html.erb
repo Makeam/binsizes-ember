@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Binsizes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Weight</th>
+      <th>Const</th>
+      <th>Packages</th>
+      <th>Avg</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @binsizes.each do |binsize| %>
+      <tr>
+        <td><%= binsize.weight %></td>
+        <td><%= binsize.const %></td>
+        <td><%= binsize.packages %></td>
+        <td><%= binsize.avg %></td>
+        <td><%= link_to 'Show', binsize %></td>
+        <td><%= link_to 'Edit', edit_binsize_path(binsize) %></td>
+        <td><%= link_to 'Destroy', binsize, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Binsize', new_binsize_path %>

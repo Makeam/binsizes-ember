@@ -1,0 +1,33 @@
+<%= form_for(@binsize) do |f| %>
+  <% if @binsize.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@binsize.errors.count, "error") %> prohibited this binsize from being saved:</h2>
+
+      <ul>
+      <% @binsize.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :weight %><br>
+    <%= f.number_field :weight %>
+  </div>
+  <div class="field">
+    <%= f.label :const %><br>
+    <%= f.check_box :const %>
+  </div>
+  <div class="field">
+    <%= f.label :packages %><br>
+    <%= f.text_field :packages %>
+  </div>
+  <div class="field">
+    <%= f.label :avg %><br>
+    <%= f.number_field :avg %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

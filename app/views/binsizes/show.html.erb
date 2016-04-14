@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @binsize.weight %>
+</p>
+
+<p>
+  <strong>Const:</strong>
+  <%= @binsize.const %>
+</p>
+
+<p>
+  <strong>Packages:</strong>
+  <%= @binsize.packages %>
+</p>
+
+<p>
+  <strong>Avg:</strong>
+  <%= @binsize.avg %>
+</p>
+
+<%= link_to 'Edit', edit_binsize_path(@binsize) %> |
+<%= link_to 'Back', binsizes_path %>

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   Rails.application.routes.draw do
     mount_ember_app :frontend, to: "/"
   end
@@ -8,7 +9,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'binsizes#index'
+  resources :binsizes
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
