@@ -1,0 +1,16 @@
+<hr>
+<div>
+    <p>тут таблица с конфигурациями</p>
+    {{#each model as |binsize|}}
+        <p>{{binsize.id}}</p>
+        <div>
+        {{#each binsize.packages as |package|}}
+            {{package.val}}{{package.unit}} - {{package.percent}}%
+        {{/each}}
+        </div>
+
+
+    {{/each}}
+</div>
+<hr>
+<div>кнопка</div>
