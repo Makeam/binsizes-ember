@@ -1,0 +1,7 @@
+<p>{{model.id}}</p>
+<div>
+    {{#each model.packages as |package|}}
+    {{package.val}}{{package.unit}} - {{package.percent}}%
+    {{/each}}
+</div>
+
