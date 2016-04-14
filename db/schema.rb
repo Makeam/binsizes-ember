@@ -18,11 +18,11 @@ ActiveRecord::Schema.define(version: 20160414150414) do
 
   create_table "binsizes", force: :cascade do |t|
     t.integer  "weight"
-    t.boolean  "const"
+    t.boolean  "const",      default: false
     t.json     "packages"
     t.integer  "avg"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
 end
