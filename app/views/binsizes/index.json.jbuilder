@@ -3,7 +3,7 @@ json.data do
         json.type 'binsize'
         json.id binsize.id
         json.attributes do
-            json.extract! binsize, :weight, :avg
+            json.extract! binsize, :weight, :avg, :const
             json.url binsize_url(binsize, format: :json)
         end
         json.relationships do
