@@ -7,13 +7,13 @@ export default Ember.Route.extend({
         },
         changeType: function(){
             console.log('change type select');
-        },
-        changePPercent: function(){
-            console.log('change percent');
-            console.log(this);
         }
     },
     model(params){
-        return this.store.findRecord('binsize', params.binsize_id);
+        return Ember.RSVP.hash({
+            binsize: this.store.findRecord('binsize', params.binsize_id),
+            allocated: 100,
+            available: 0
+        });
     }
 });

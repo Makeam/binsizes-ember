@@ -1,4 +1,4 @@
-<h3>Configuration ID:{{model.id}}</h3>
+<h3>Configuration ID:{{model.binsize.id}}</h3>
 <div>
     Use
     <select {{action "changeType" on="change"}}>
@@ -6,7 +6,7 @@
         <option>constant block sizes</option>
     </select>
 </div>
-{{#if model.const}}
+{{#if model.binsize.const}}
 <div>
     of
     <select>
@@ -21,7 +21,7 @@
 {{/if}}
 <hr>
 <div>
-    {{#each model.packages as |package|}}
+    {{#each model.binsize.packages as |package|}}
     <div>
         {{ package.percent }}%
         <input value={{package.percent}} onkeyup={{action (action "changePercent" package) value="target.value"}}/>
@@ -29,7 +29,10 @@
     </div>
     {{/each}}
 </div>
-
+<div>
+    <p>Allocated: {{model.binsize.allocated}}%</p>
+    <p>Available for use: {{model.binsize.available}}%</p>
+</div>
 <hr>
 <label>Size</label>
 <input>
