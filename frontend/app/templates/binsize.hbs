@@ -1,7 +1,7 @@
 <h3>Configuration ID:{{model.id}}</h3>
 <div>
     Use
-    <select>
+    <select {{action "changeType" on="change"}}>
         <option>bin distribution of block sizes, with custom bins</option>
         <option>constant block sizes</option>
     </select>
@@ -22,9 +22,14 @@
 <hr>
 <div>
     {{#each model.packages as |package|}}
-        {{package.val}}{{package.unit}} - {{package.percent}}%
+    <div>
+        {{ package.percent }}%
+        <input value={{package.percent}} onkeyup={{action (action "changePercent" package) value="target.value"}}/>
+        {{ package.val }}{{ package.unit }}
+    </div>
     {{/each}}
 </div>
+
 <hr>
 <label>Size</label>
 <input>
@@ -33,5 +38,8 @@
     <option>KB</option>
     <option>MB</option>
 </select>
-<button>Add Bin</button>
+<button {{action "addBin"}}>Add Bin</button>
+<hr>
+<button>Save Configuration</button>
+
 
