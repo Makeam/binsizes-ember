@@ -41,7 +41,9 @@ class BinsizesController < ApplicationController
   # PATCH/PUT /binsizes/1.json
   def update
     respond_to do |format|
-      if @binsize.update(binsize_params)
+
+      @binsize.from_json(binsize_params)
+      if @binsize.save
         format.html { redirect_to @binsize, notice: 'Binsize was successfully updated.' }
         format.json { render :show, status: :ok, location: @binsize }
       else
@@ -69,6 +71,6 @@ class BinsizesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def binsize_params
-      params.require(:binsize).permit(:weight, :const, :avg)
+      params[:data][:attributes].to_json
     end
 end

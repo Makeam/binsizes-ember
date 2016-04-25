@@ -1,0 +1,46 @@
+<div>
+    Use
+    <select name="binsize_const" {{action "changeType" on="change"}}>
+        <option value="0">bin distribution of block sizes, with custom bins</option>
+        <option value="1">constant block sizes</option>
+    </select>
+</div>
+{{#if model.const}}
+<div>
+    of
+    <select name="package_params" {{action "changePackage" on="change"}}>
+        <option value="512 B"> 512 Bytes </option>
+        <option value="1 KB" > 1 KB      </option>
+        <option value="2 KB" > 2 KB      </option>
+        <option value="4 KB" > 4 KB      </option>
+        <option value="8 KB" > 8 KB      </option>
+        <option value="16 KB"> 16 KB     </option>
+    </select>
+</div>
+{{/if}}
+<hr>
+<div>
+    {{#each model.packages as |package|}}
+    <div class="package-{{package.id}}">
+        {{ package.percent }}%
+        <input value={{package.percent}} onkeyup={{action (action "changePercent" package) value="target.value"}}/>
+        {{ package.val }}{{ package.unit }}
+        <button {{action "deletePackage" package}}>X</button>
+    </div>
+    {{/each}}
+</div>
+<div>
+    <p class="allocated">Allocated : <span></span></p>
+    <p class="available">Available : <span></span></p>
+</div>
+<hr>
+<label>Size</label>
+<input name="new_package_val">
+<select name="new_package_unit">
+    <option>B</option>
+    <option>KB</option>
+    <option>MB</option>
+</select>
+<button {{action "addBin"}}>Add Bin</button>
+<hr>
+<button {{action "saveConfiguration" model}} >Save Configuration</button>

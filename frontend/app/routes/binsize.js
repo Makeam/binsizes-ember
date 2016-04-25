@@ -10,10 +10,11 @@ export default Ember.Route.extend({
         }
     },
     model(params){
-        return Ember.RSVP.hash({
-            binsize: this.store.findRecord('binsize', params.binsize_id),
-            allocated: 100,
-            available: 0
-        });
+        return this.store.findRecord('binsize', params.binsize_id)
     }
+//    model(params){
+//        return Ember.RSVP.hash({
+//            binsize: this.store.findRecord('binsize', params.binsize_id)
+//        });
+//    }
 });
