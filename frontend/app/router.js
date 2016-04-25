@@ -7,6 +7,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('binsize', { path: 'binsize/:binsize_id' });
+  this.route('create');
 });
 
 export default Router;

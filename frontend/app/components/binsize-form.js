@@ -16,11 +16,18 @@ var setLegend = function(allocated){
     $('p.available span').html((100 - allocated));
 };
 
+var setConstSelect = function(value){
+    var v = String(Number(value));
+    console.log(v);
+    $('option[value="' + v + '"]').attr('selected','selected');
+};
+
 export default Ember.Component.extend({
     didRender(){
         this._super(...arguments);
         console.log('didrender');
         setLegend(computeAllocated(this.model));
+        setConstSelect(this.model.get('const'));
     },
     actions:{
         addBin: function(){
@@ -58,11 +65,11 @@ export default Ember.Component.extend({
             console.log('change type select component');
             console.log($('select[name="binsize_const"]').val());
             var binsize_const = $('select[name="binsize_const"]').val();
-            this.model.set('const', binsize_const);
+            this.model.set('const', Boolean(Number(binsize_const)));
             if (binsize_const == 1){
                 var packages = this.model.get('packages');
                 packages.forEach(function(item,i,arr){
-                    item.destroy();
+                    item.destroyRecord();
                 });
                 var pack = this.store.createRecord('package', {
                     val: 512,
@@ -107,11 +114,10 @@ export default Ember.Component.extend({
             setLegend(allocated);
         },
         saveConfiguration: function(model){
-            model.save().then(function(binsize){
+            this.model.save().then(function(binsize){
                 console.log('Binsize Saved');
                 var packages = binsize.get('packages');
                 packages.forEach(function(item, i, arr){
-                    console.log('Package: ' + i);
                     item.save().then(function(pack){
                         console.log('Package Saved');
                     },function(adapterError){
