@@ -85,8 +85,11 @@ export default Ember.Component.extend({
         },
         deletePackage: function(pack){
               pack.deleteRecord();
-              $('.package-' + pack.id).hide();
-//              pack.save();
+              pack.save().then(function(p){
+                  $('.package-' + pack.id).hide();
+              },function(adapterError){
+                  console.log(adapterError.errors[0].description)
+              });
         },
         changePercent: function(p, percent){
             console.log('change percent');
@@ -105,7 +108,16 @@ export default Ember.Component.extend({
         },
         saveConfiguration: function(model){
             model.save().then(function(binsize){
-                console.log('Saved');
+                console.log('Binsize Saved');
+                var packages = binsize.get('packages');
+                packages.forEach(function(item, i, arr){
+                    console.log('Package: ' + i);
+                    item.save().then(function(pack){
+                        console.log('Package Saved');
+                    },function(adapterError){
+                        console.log(adapterError.errors[0].description);
+                    });
+                });
             },function(adapterError){
                 console.log(adapterError.errors[0].description);
             })

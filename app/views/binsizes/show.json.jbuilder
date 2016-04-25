@@ -18,7 +18,7 @@ json.data do
     end
 end
 json.included do
-  json.array!(Package.all) do |package|
+  json.array!(@binsize.packages) do |package|
     json.type 'package'
     json.id package.id
     json.attributes do
