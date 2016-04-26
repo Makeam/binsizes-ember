@@ -35,6 +35,7 @@ var initSlider = function(pack, available){
         range: "min",
         max: max_percent,
         slide: function(event, ui) {
+            pack.set('percent', ui.value);
             console.log('model?: '+ this);
             console.log('change slider: '+ ui.value);
             console.log($(this).closest('.package').find('input').attr('value'));
