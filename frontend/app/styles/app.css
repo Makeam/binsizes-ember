@@ -1,0 +1,32 @@
+.slider-wrapper {
+    position: relative;
+    min-height: 300px;
+    background-color: lightgray;
+    /*border: 1px solid black;*/
+    border-radius: 6px;
+    width: 13px;
+
+}
+
+.slider-wrapper-2 {
+    position: relative;
+    top: 0px;
+}
+.slider {
+    min-height: 250px;
+}
+
+.ui-slider-vertical {
+    width: .8em;
+    height: 0px;
+}
+
+.ui-slider-range {
+    background-color: #107fac;
+    background-image: none;
+}
+
+.ui-slider {
+    background-color: #5cadc6;
+    background-image: none;
+}

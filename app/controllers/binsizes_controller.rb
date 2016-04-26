@@ -24,7 +24,8 @@ class BinsizesController < ApplicationController
   # POST /binsizes
   # POST /binsizes.json
   def create
-    @binsize = Binsize.new(binsize_params)
+    @binsize = Binsize.new
+    @binsize.from_json(binsize_params)
 
     respond_to do |format|
       if @binsize.save
@@ -43,6 +44,7 @@ class BinsizesController < ApplicationController
     respond_to do |format|
 
       @binsize.from_json(binsize_params)
+
       if @binsize.save
         format.html { redirect_to @binsize, notice: 'Binsize was successfully updated.' }
         format.json { render :show, status: :ok, location: @binsize }

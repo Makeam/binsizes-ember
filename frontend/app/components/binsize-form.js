@@ -22,14 +22,44 @@ var setConstSelect = function(value){
     $('option[value="' + v + '"]').attr('selected','selected');
 };
 
+var initSlider = function(pack, available){
+    console.log();
+    var target = $('#slider-' + pack.get('val') + '-' + pack.get('unit'));
+    var max_percent = Number(pack.get('percent')) + Number(available)
+    target.css('min-height', (max_percent * 3) + 'px');
+    target.parent().css('top', (300 - (max_percent * 3)) + 'px');
+    target.slider();
+    target.slider({
+        value: pack.get('percent'),
+        orientation: "vertical",
+        range: "min",
+        max: max_percent,
+        slide: function(event, ui) {
+            console.log('model?: '+ this);
+            console.log('change slider: '+ ui.value);
+            console.log($(this).closest('.package').find('input').attr('value'));
+            $(this).closest('.package').find('input').attr('value', ui.value);
+//            $('#input-' + pack.get('val') + '-' + pack.get('unit')).attr('value', ui.value);
+        }
+    });
+};
+
 export default Ember.Component.extend({
     didRender(){
         this._super(...arguments);
         console.log('didrender');
-        setLegend(computeAllocated(this.model));
+        var allocated = computeAllocated(this.model);
+        setLegend(allocated);
         setConstSelect(this.model.get('const'));
+        var packages = this.model.get('packages');
+        packages.forEach(function(item,i,arr){
+            initSlider(item, (100 - allocated));
+        });
     },
     actions:{
+        changeFromSlide: function(){
+            console.log('changeFromSlide');
+        },
         addBin: function(){
             console.log('Add bin');
             console.log($('input[name="new_package_val"]').val());

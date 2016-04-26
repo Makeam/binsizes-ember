@@ -7,6 +7,10 @@ module.exports = function(defaults) {
     // Add options here
   });
 
+    app.import('bower_components/jquery-ui/jquery-ui.min.js');
+    app.import('bower_components/jquery-ui/jquery-ui.css');
+    app.import('bower_components/bootstrap/bootstrap.css');
+    app.import('bower_components/bootstrap/bootstrap-theme.css');
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //

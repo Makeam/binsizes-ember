@@ -1,18 +1,23 @@
 <hr>
 <div>
-    <p>тут таблица с конфигурациями</p>
+    <h3>All configurations</h3>
+    <table class="table">
+    <tbody>
+
     {{#each model as |binsize|}}
-        <p>{{binsize.id}} - {{binsize.const}}</p>
-        <div>
-        {{#each binsize.packages as |package|}}
-            {{package.val}}{{package.unit}} - {{package.percent}}%
-        {{/each}}
-        </div>
-        <div>{{#link-to 'binsize' binsize}}Edit{{/link-to}}</div>
-        <div><a href="" {{action "deleteBinsize" binsize}}>Delete</a></div>
-
-
+        <tr>
+            <td>{{binsize.id}} - {{binsize.const}}</td>
+            <td>
+            {{#each binsize.packages as |package|}}
+                {{package.val}}{{package.unit}} - {{package.percent}}%
+            {{/each}}
+            </td>
+            <td>{{#link-to 'binsize' binsize}}Edit{{/link-to}}</td>
+            <td><a href="" {{action "deleteBinsize" binsize}}>Delete</a></td>
+        </tr>
     {{/each}}
+    </tbody>
+    </table>
 </div>
 <hr>
 <div>{{#link-to 'create'}}Add bin{{/link-to}}</div>
