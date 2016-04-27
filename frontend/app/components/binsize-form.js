@@ -9,7 +9,7 @@ var computeAllocated = function(model){
     console.log('Compute Allocated : ' + allocated);
     return allocated;
 };
-
+//
 var computeAVG = function(model){
     var allocated = 0,
         avg = 0,
@@ -34,41 +34,41 @@ var setLegend = function(allocated){
 };
 
 var setConstSelect = function(value){
+    console.log('setConstSelect');
     var v = String(Number(value));
-    console.log(v);
     $('option[value="' + v + '"]').attr('selected','selected');
 };
 
-var initSlider = function(pack, available){
-    console.log();
-    var target = $('#slider-' + pack.get('val') + '-' + pack.get('unit'));
-    var max_percent = Number(pack.get('percent')) + Number(available)
-    target.css('min-height', (max_percent * 3) + 'px');
-    target.parent().css('top', (300 - (max_percent * 3)) + 'px');
-    target.slider();
-    target.slider({
-        value: pack.get('percent'),
-        orientation: "vertical",
-        range: "min",
-        max: max_percent,
-        slide: function(event, ui) {
-            pack.set('percent', ui.value);
-        }
-    });
-};
+//var initSlider = function(pack, available){
+//    console.log();
+//    var target = $('#slider-' + pack.get('val') + '-' + pack.get('unit'));
+//    var max_percent = Number(pack.get('percent')) + Number(available)
+//    target.css('min-height', (max_percent * 3) + 'px');
+//    target.parent().css('top', (300 - (max_percent * 3)) + 'px');
+//    target.slider();
+//    target.slider({
+//        value: pack.get('percent'),
+//        orientation: "vertical",
+//        range: "min",
+//        max: max_percent,
+//        slide: function(event, ui) {
+//            pack.set('percent', ui.value);
+//        }
+//    });
+//};
 
 export default Ember.Component.extend({
     didRender(){
         this._super(...arguments);
         console.log('didrender');
         var allocated = computeAllocated(this.model);
-        computeAVG(this.model);
+//        computeAVG(this.model);
         setLegend(allocated);
         setConstSelect(this.model.get('const'));
-        var packages = this.model.get('packages');
-        packages.forEach(function(item,i,arr){
-            initSlider(item, (100 - allocated));
-        });
+//        var packages = this.model.get('packages');
+//        packages.forEach(function(item,i,arr){
+//            initSlider(item, (100 - allocated));
+//        });
     },
     actions:{
         addBin: function(){
@@ -128,41 +128,43 @@ export default Ember.Component.extend({
 //                item.save();
             });
         },
-        deletePackage: function(pack){
-              pack.deleteRecord();
-              pack.save().then(function(p){
-                  $('.package-' + pack.id).hide();
-              },function(adapterError){
-                  console.log(adapterError.errors[0].description)
-              });
-        },
-        changePercent: function(p, percent){
-            console.log('change percent');
-            var allocated = computeAllocated(this.model);
-            var will_allocate = Number(allocated) + Number(percent) - p.get('percent');
-            console.log('will_allocate : ' + will_allocate);
-            console.log('will_allocate > 100 ' + (will_allocate > 100));
-            if (will_allocate > 100) {
-                percent = Number(percent) + 100 - will_allocate;
-            }
-            console.log('percent ' + percent);
-            p.set('percent', percent);
-            allocated = computeAllocated(this.model);
-            console.log('Allocated : ' + allocated);
-            setLegend(allocated);
-        },
+//        deletePackage: function(pack){
+//              pack.deleteRecord();
+//              pack.save().then(function(p){
+//                  $('.package-' + pack.id).hide();
+//              },function(adapterError){
+//                  console.log(adapterError.errors[0].description)
+//              });
+//        },
+//        changePercent: function(p, percent){
+//            console.log('change percent');
+//            var allocated = computeAllocated(this.model);
+//            var will_allocate = Number(allocated) + Number(percent) - p.get('percent');
+//            console.log('will_allocate : ' + will_allocate);
+//            console.log('will_allocate > 100 ' + (will_allocate > 100));
+//            if (will_allocate > 100) {
+//                percent = Number(percent) + 100 - will_allocate;
+//            }
+//            console.log('percent ' + percent);
+//            p.set('percent', percent);
+//            allocated = computeAllocated(this.model);
+//            console.log('Allocated : ' + allocated);
+//            setLegend(allocated);
+//        },
         saveConfiguration: function(model){
             this.model.save().then(function(binsize){
                 console.log('Binsize Saved');
-                var packages = binsize.get('packages');
+                var packages = binsize.get('packages'),
+                    saved = true;
                 packages.forEach(function(item, i, arr){
                     item.save().then(function(pack){
                         console.log('Package Saved');
-                        $('.saved').show().delay(1500).fadeOut();
                     },function(adapterError){
                         console.log(adapterError.errors[0].description);
+                        saved = false;
                     });
                 });
+                if (saved) { $('.saved').show().delay(1500).fadeOut();}
             },function(adapterError){
                 console.log(adapterError.errors[0].description);
             })

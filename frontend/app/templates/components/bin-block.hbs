@@ -1,1 +1,16 @@
-{{yield}}
+<div class="">
+    <div class="pack-header percent">{{ package.percent }}%</div>
+    <div class="pack-header">
+        <input class="input-{{package.val}}-{{package.unit}} form-control input-sm percent-input" value={{package.percent}} onkeyup={{action (action "changePercent" package) value="target.value"}} />
+    </div>
+
+    <div class="slider-wrapper">
+        <div class="slider-wrapper-2">
+            <div class="slider" id="slider-{{package.val}}-{{package.unit}}"></div>
+        </div>
+    </div>
+    <div class="text-center">
+        <p class="small">{{ package.val }} {{ package.unit }}</p>
+        <button class="btn btn-link btn-xs text-muted" {{action "deletePackage" package}}><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+    </div>
+</div>
