@@ -12,12 +12,13 @@
                 {{package.val}}{{package.unit}} - {{package.percent}}%
             {{/each}}
             </td>
-            <td>{{#link-to 'binsize' binsize}}Edit{{/link-to}}</td>
-            <td><a href="" {{action "deleteBinsize" binsize}}>Delete</a></td>
+            <td>{{format-size binsize.avg}}</td>
+            <td>{{#link-to 'binsize' binsize class="btn btn-default btn-xs"}} Edit {{/link-to}}</td>
+            <td><a href="" class="btn btn-default btn-xs" {{action "deleteBinsize" binsize}}> Delete </a></td>
         </tr>
     {{/each}}
     </tbody>
     </table>
 </div>
 <hr>
-<div>{{#link-to 'create'}}Add bin{{/link-to}}</div>
+<div>{{#link-to 'create' class="btn btn-primary"}}Add bin{{/link-to}}</div>

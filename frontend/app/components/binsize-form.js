@@ -10,6 +10,23 @@ var computeAllocated = function(model){
     return allocated;
 };
 
+var computeAVG = function(model){
+    var allocated = 0,
+        avg = 0,
+        flow = 0,
+        packages = model.get('packages');
+
+    packages.forEach(function(item, i, arr){
+        allocated += Number(item.get('percent'));
+        flow += item.get('bytes') * item.get('percent');
+    });
+
+    avg = (allocated > 0) ? Number(flow / allocated) : 0;
+    model.set('avg', avg);
+    console.log('Compute AVG : ' + avg);
+    return avg;
+};
+
 var setLegend = function(allocated){
     console.log('setLegend');
     $('p.allocated span').html(allocated);
@@ -36,11 +53,6 @@ var initSlider = function(pack, available){
         max: max_percent,
         slide: function(event, ui) {
             pack.set('percent', ui.value);
-            console.log('model?: '+ this);
-            console.log('change slider: '+ ui.value);
-            console.log($(this).closest('.package').find('input').attr('value'));
-            $(this).closest('.package').find('input').attr('value', ui.value);
-//            $('#input-' + pack.get('val') + '-' + pack.get('unit')).attr('value', ui.value);
         }
     });
 };
@@ -50,6 +62,7 @@ export default Ember.Component.extend({
         this._super(...arguments);
         console.log('didrender');
         var allocated = computeAllocated(this.model);
+        computeAVG(this.model);
         setLegend(allocated);
         setConstSelect(this.model.get('const'));
         var packages = this.model.get('packages');
@@ -58,20 +71,15 @@ export default Ember.Component.extend({
         });
     },
     actions:{
-        changeFromSlide: function(){
-            console.log('changeFromSlide');
-        },
         addBin: function(){
             console.log('Add bin');
-            console.log($('input[name="new_package_val"]').val());
-            console.log($('select[name="new_package_unit"]').val());
             var can_save = true;
             var unit = $('select[name="new_package_unit"]').val();
             var val = $('input[name="new_package_val"]').val();
 
             var packages = this.model.get('packages');
             console.log('count: ' + packages.get('length'));
-            if (packages.get('length') >= 8 ){
+            if ((packages.get('length') >= 8 ) || (val == '')){
                 can_save = false;
             } else {
                 packages.forEach(function(item,i,arr){
@@ -111,9 +119,8 @@ export default Ember.Component.extend({
             }
         },
         changePackage: function(){
-            console.log('change package params component');
+            console.log('change package params');
             var pack_params = $('select[name="package_params"]').val().split(' ');
-            console.log(pack_params[0] + ' : ' + pack_params[1]);
             var packages = this.model.get('packages');
             packages.forEach(function(item,i,arr){
                 item.set('val', pack_params[0]);
@@ -151,6 +158,7 @@ export default Ember.Component.extend({
                 packages.forEach(function(item, i, arr){
                     item.save().then(function(pack){
                         console.log('Package Saved');
+                        $('.saved').show().delay(1500).fadeOut();
                     },function(adapterError){
                         console.log(adapterError.errors[0].description);
                     });

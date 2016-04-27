@@ -1,10 +1,24 @@
+*{
+    outline: none !important;
+}
+*{
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
 .slider-wrapper {
     position: relative;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 15px;
     min-height: 300px;
     background-color: lightgray;
     /*border: 1px solid black;*/
     border-radius: 6px;
-    width: 13px;
+    width: 10px;
 
 }
 
@@ -29,4 +43,60 @@
 .ui-slider {
     background-color: #5cadc6;
     background-image: none;
+    width: 10px;
+}
+
+.label {
+    float: left;
+}
+
+select.form-control {
+    width: auto;
+    display:inline-block;
+}
+
+.size-input {
+    width: 65px;
+    display:inline-block;
+}
+
+.small {
+    font-size: 10px;
+}
+
+.saved {
+    display: none;
+}
+/*
+============  Package Block  ============================
+*/
+
+.percent {
+    height: 26px;
+    padding: 4px;
+}
+.percent-input {
+    width: 30px;
+    height: 26px;
+    margin: 0 5px;
+    padding: 4px;
+    display: none;
+    font-size: 14px;
+}
+
+.pack-block{
+    display: inline-block;
+    width: 50px;
+    padding: 5px;
+    margin: 0 10px;
+}
+
+.pack-block:hover{
+    background-color: #FAFAFA;
+}
+.pack-block:hover .percent-input{
+    display: block;
+}
+.pack-block:hover .percent{
+    display: none;
 }

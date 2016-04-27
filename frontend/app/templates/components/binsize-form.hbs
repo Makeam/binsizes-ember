@@ -1,59 +1,71 @@
-<div>
-    Use
-    <select name="binsize_const" {{action "changeType" on="change"}}>
-        <option value="0">bin distribution of block sizes, with custom bins</option>
-        <option value="1">constant block sizes</option>
-    </select>
+<div class="row">
+
+    <div class="col-md-4">
+        <label>Use</label>
+        <select class="form-control input-sm select" name="binsize_const" {{action "changeType" on="change"}}>
+            <option value="0">bin distribution of block sizes, with custom bins</option>
+            <option value="1">constant block sizes</option>
+        </select>
+    </div>
+    {{#if model.const}}
+    <div class="col-md-1">
+        of
+    </div>
+    <div class="col-md-2">
+        <select class="form-control input-sm" name="package_params" {{action "changePackage" on="change"}}>
+            <option value="512 B"> 512 Bytes </option>
+            <option value="1 KB" > 1 KB      </option>
+            <option value="2 KB" > 2 KB      </option>
+            <option value="4 KB" > 4 KB      </option>
+            <option value="8 KB" > 8 KB      </option>
+            <option value="16 KB"> 16 KB     </option>
+        </select>
+    </div>
+    {{/if}}
 </div>
-{{#if model.const}}
-<div>
-    of
-    <select name="package_params" {{action "changePackage" on="change"}}>
-        <option value="512 B"> 512 Bytes </option>
-        <option value="1 KB" > 1 KB      </option>
-        <option value="2 KB" > 2 KB      </option>
-        <option value="4 KB" > 4 KB      </option>
-        <option value="8 KB" > 8 KB      </option>
-        <option value="16 KB"> 16 KB     </option>
-    </select>
-</div>
-{{/if}}
 <hr>
 <div class="row">
     <div class="col-md-8">
         <div class="row">
             {{#each model.packages as |package|}}
-            <div class="package package-{{package.id}} col-md-1">
-                {{ package.percent }}%
-                <input class="input-{{package.val}}-{{package.unit}}" value={{package.percent}} onkeyup={{action (action "changePercent" package) value="target.value"}} />
+            <div class="package package-{{package.id}} pack-block">
+                <div class="pack-header percent">{{ package.percent }}%</div>
+                <div class="pack-header">
+                    <input class="input-{{package.val}}-{{package.unit}} form-control input-sm percent-input" value={{package.percent}} onkeyup={{action (action "changePercent" package) value="target.value"}} />
+                </div>
 
                 <div class="slider-wrapper">
-                <div class="slider-wrapper-2">
-                    <div class="slider" id="slider-{{package.val}}-{{package.unit}}"></div>
+                    <div class="slider-wrapper-2">
+                        <div class="slider" id="slider-{{package.val}}-{{package.unit}}"></div>
+                    </div>
                 </div>
+                <div class="text-center">
+                    <p class="small">{{ package.val }} {{ package.unit }}</p>
+                    <button class="btn btn-link btn-xs text-muted" {{action "deletePackage" package}}><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                 </div>
-                {{ package.val }}{{ package.unit }}
-                <button {{action "deletePackage" package}}>X</button>
             </div>
             {{/each}}
         </div>
     </div>
     <div class="col-md-4">
         <div>
-            <p class="allocated">Allocated : <span></span></p>
-            <p class="available">Available : <span></span></p>
+            <p class="allocated">Allocated : <span></span>%</p>
+            <p class="available">Available : <span></span>%</p>
+            <p class="average">Average : <span>{{format-size model.avg}}</span></p>
         </div>
 
         <hr>
         <label>Size</label>
-        <input name="new_package_val">
-        <select name="new_package_unit">
+        <input class="form-control input-sm size-input" name="new_package_val">
+        <select class="form-control input-sm" name="new_package_unit">
             <option>B</option>
             <option>KB</option>
             <option>MB</option>
         </select>
-        <button {{action "addBin"}}>Add Bin</button>
+        <button class="btn btn-primary btn-sm" {{action "addBin"}}><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Bin</button>
     </div>
 </div>
 <hr>
-<button {{action "saveConfiguration" model}} >Save Configuration</button>
+<button class="btn btn-primary" {{action "saveConfiguration" model}} > <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save Configuration</button>
+<span class="saved badge">Saved</span>
+
