@@ -12,15 +12,11 @@ export function formatSize(params/*, hash*/) {
     sizes[3] = { unit: ' Bytes ', size: 1 };
 
     sizes.forEach(function(item, i, arr){
-//        console.log(item.size);
-//        console.log(size + ' / ' + item.size);
         if (size >= item.size) {
 
             body = Math.floor(size / item.size);
-//            console.log('Body ' + body);
             size = size - item.size * body;
             text += body + item.unit;
-//            console.log('text ' + text);
         }
     });
 
