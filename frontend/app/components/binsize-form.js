@@ -61,8 +61,10 @@ export default Ember.Component.extend({
             var can_save = true;
             var unit = $('select[name="new_package_unit"]').val();
             var val = $('input[name="new_package_val"]').val();
-
             var packages = this.model.get('packages');
+
+            $('input[name="new_package_val"]').val('');
+
             console.log('count: ' + packages.get('length'));
             if ((packages.get('length') >= 8 ) || (val == '')){
                 can_save = false;
@@ -101,6 +103,7 @@ export default Ember.Component.extend({
                     binsize: this.model
                 });
             }
+            computeAVG(this.model);
         },
         changePackage: function(){
             console.log('change package params');
@@ -111,6 +114,7 @@ export default Ember.Component.extend({
                 item.set('unit', pack_params[1]);
 //                item.save();
             });
+            computeAVG(this.model);
         },
         saveConfiguration: function(model){
             this.model.save().then(function(binsize){

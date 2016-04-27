@@ -14,7 +14,7 @@ export function formatSize(params/*, hash*/) {
     sizes.forEach(function(item, i, arr){
 //        console.log(item.size);
 //        console.log(size + ' / ' + item.size);
-        if (size > item.size) {
+        if (size >= item.size) {
 
             body = Math.floor(size / item.size);
 //            console.log('Body ' + body);
