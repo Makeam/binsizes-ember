@@ -1,18 +1,14 @@
 <div class="row">
 
-    <div class="col-md-4">
-        <label>Use</label>
+    <div class="col-md-6">
+        <label> Use </label>
         <select class="form-control input-sm select" name="binsize_const" {{action "changeType" on="change"}}>
             <option value="0">bin distribution of block sizes, with custom bins</option>
             <option value="1">constant block sizes</option>
         </select>
-    </div>
     {{#if model.const}}
-    <div class="col-md-1">
-        of
-    </div>
-    <div class="col-md-2">
-        <select class="form-control input-sm" name="package_params" {{action "changePackage" on="change"}}>
+        <label> of </label>
+        <select class="form-control input-sm package-params" name="package_params" {{action "changePackage" on="change"}}>
             <option value="512 B"> 512 Bytes </option>
             <option value="1 KB" > 1 KB      </option>
             <option value="2 KB" > 2 KB      </option>
@@ -20,11 +16,11 @@
             <option value="8 KB" > 8 KB      </option>
             <option value="16 KB"> 16 KB     </option>
         </select>
-    </div>
     {{/if}}
+    </div>
 </div>
 <hr>
-
+{{#unless model.const}}
 <div class="row">
     <div class="col-md-8">
         <div class="row">
@@ -54,6 +50,7 @@
     </div>
 </div>
 <hr>
+{{/unless}}
 <button class="btn btn-primary" {{action "saveConfiguration" model}} > <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save Configuration</button>
 <span class="saved badge">Saved</span>
 

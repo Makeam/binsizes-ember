@@ -33,42 +33,27 @@ var setLegend = function(allocated){
     $('p.available span').html((100 - allocated));
 };
 
-var setConstSelect = function(value){
+var setConstSelect = function(model){
     console.log('setConstSelect');
-    var v = String(Number(value));
+    var v = Number(model.get('const'));
     $('option[value="' + v + '"]').attr('selected','selected');
+    if (v == 1) {
+        var packages = model.get('packages');
+        packages.forEach(function(item, i, arr){
+            var pack_value = item.get('val') + ' ' + item.get('unit');
+            $('option[value="' + pack_value + '"]').attr('selected','selected');
+        });
+    }
 };
 
-//var initSlider = function(pack, available){
-//    console.log();
-//    var target = $('#slider-' + pack.get('val') + '-' + pack.get('unit'));
-//    var max_percent = Number(pack.get('percent')) + Number(available)
-//    target.css('min-height', (max_percent * 3) + 'px');
-//    target.parent().css('top', (300 - (max_percent * 3)) + 'px');
-//    target.slider();
-//    target.slider({
-//        value: pack.get('percent'),
-//        orientation: "vertical",
-//        range: "min",
-//        max: max_percent,
-//        slide: function(event, ui) {
-//            pack.set('percent', ui.value);
-//        }
-//    });
-//};
 
 export default Ember.Component.extend({
     didRender(){
         this._super(...arguments);
         console.log('didrender');
         var allocated = computeAllocated(this.model);
-//        computeAVG(this.model);
         setLegend(allocated);
-        setConstSelect(this.model.get('const'));
-//        var packages = this.model.get('packages');
-//        packages.forEach(function(item,i,arr){
-//            initSlider(item, (100 - allocated));
-//        });
+        setConstSelect(this.model);
     },
     actions:{
         addBin: function(){
@@ -89,7 +74,6 @@ export default Ember.Component.extend({
                     }
                 });
             }
-
             if (can_save) {
                 var pack = this.store.createRecord('package', {
                     val: val,
@@ -128,29 +112,6 @@ export default Ember.Component.extend({
 //                item.save();
             });
         },
-//        deletePackage: function(pack){
-//              pack.deleteRecord();
-//              pack.save().then(function(p){
-//                  $('.package-' + pack.id).hide();
-//              },function(adapterError){
-//                  console.log(adapterError.errors[0].description)
-//              });
-//        },
-//        changePercent: function(p, percent){
-//            console.log('change percent');
-//            var allocated = computeAllocated(this.model);
-//            var will_allocate = Number(allocated) + Number(percent) - p.get('percent');
-//            console.log('will_allocate : ' + will_allocate);
-//            console.log('will_allocate > 100 ' + (will_allocate > 100));
-//            if (will_allocate > 100) {
-//                percent = Number(percent) + 100 - will_allocate;
-//            }
-//            console.log('percent ' + percent);
-//            p.set('percent', percent);
-//            allocated = computeAllocated(this.model);
-//            console.log('Allocated : ' + allocated);
-//            setLegend(allocated);
-//        },
         saveConfiguration: function(model){
             this.model.save().then(function(binsize){
                 console.log('Binsize Saved');

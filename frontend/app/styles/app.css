@@ -8,6 +8,9 @@
 }
 
 
+/*
+============  Slider  ============================
+*/
 
 .slider-wrapper {
     position: relative;
@@ -46,6 +49,26 @@
     width: 10px;
 }
 
+/*
+============  Index  ============================
+*/
+
+
+.p-item {
+    display: inline-block;
+}
+
+.p-item:after {
+    content:", ";
+}
+
+.p-item:last-child:after {
+    content:".";
+}
+/*
+============  Form  ============================
+*/
+
 .label {
     float: left;
 }
@@ -55,7 +78,8 @@ select.form-control {
     display:inline-block;
 }
 
-.size-input {
+.size-input,
+.package-params{
     width: 65px;
     display:inline-block;
 }

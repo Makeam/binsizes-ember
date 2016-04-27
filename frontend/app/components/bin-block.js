@@ -27,11 +27,6 @@ var computeAVG = function(model){
     return avg;
 };
 
-//var setLegend = function(allocated){
-//    console.log('setLegend');
-//    $('p.allocated span').html(allocated);
-//    $('p.available span').html((100 - allocated));
-//};
 
 var updateSlider= function(pack, available){
     console.log('updateSlider');
@@ -40,7 +35,6 @@ var updateSlider= function(pack, available){
     target.css('min-height', (max_percent * 3) + 'px');
     target.parent().css('top', (300 - (max_percent * 3)) + 'px');
     target.slider({
-//        value: pack.get('percent'),
         orientation: "vertical",
         max: max_percent
     });
@@ -51,16 +45,12 @@ var initSlider = function(pack, available){
     var binsize = pack.get('binsize');
     var brothers = binsize.get('packages');
     var target = $('#slider-' + pack.get('val') + '-' + pack.get('unit'));
-//    var max_percent = Number(pack.get('percent')) + Number(available)
-//    target.css('min-height', (max_percent * 3) + 'px');
-//    target.parent().css('top', (300 - (max_percent * 3)) + 'px');
     target.slider();
     updateSlider(pack, available);
     target.slider({
         value: pack.get('percent'),
         orientation: "vertical",
         range: "min",
-//        max: max_percent,
         slide: function(event, ui) {
             pack.set('percent', ui.value);
             available = 100 - computeAllocated(binsize);
@@ -79,12 +69,7 @@ export default Ember.Component.extend({
         var binsize = this.package.get('binsize');
         var allocated = computeAllocated(binsize);
         computeAVG(binsize);
-//        setLegend(allocated);
-//        setConstSelect(this.model.get('const'));
-//        var packages = this.model.get('packages');
-//        packages.forEach(function(item,i,arr){
-            initSlider(this.package, (100 - allocated));
-//        });
+        initSlider(this.package, (100 - allocated));
     },
     actions:{
         deletePackage: function(pack){

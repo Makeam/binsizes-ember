@@ -2,14 +2,25 @@
 <div>
     <h3>All configurations</h3>
     <table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Packages</th>
+        <th>Average</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
     <tbody>
 
     {{#each model as |binsize|}}
-        <tr>
-            <td>{{binsize.id}} - {{binsize.const}}</td>
+        <tr class="{{if binsize.const 'warning'}}">
+            <td>{{binsize.id}}</td>
+            <td>{{if binsize.const "Constant" "Variable"}}</td>
             <td>
             {{#each binsize.packages as |package|}}
-                {{package.val}}{{package.unit}} - {{package.percent}}%
+                <div class="p-item"><b>{{package.val}}{{package.unit}}</b> - {{package.percent}}%</div>
             {{/each}}
             </td>
             <td>{{format-size binsize.avg}}</td>
