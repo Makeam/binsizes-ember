@@ -1,31 +1,5 @@
 import Ember from 'ember';
 
-var computeAllocated = function(model){
-    var allocated = 0;
-    var packages = model.get('packages');
-    packages.forEach(function(item, i, arr){
-        allocated += Number(item.get('percent'));
-    });
-    console.log('Compute Allocated : ' + allocated);
-    return allocated;
-};
-//
-var computeAVG = function(model){
-    var allocated = 0,
-        avg = 0,
-        flow = 0,
-        packages = model.get('packages');
-
-    packages.forEach(function(item, i, arr){
-        allocated += Number(item.get('percent'));
-        flow += item.get('bytes') * item.get('percent');
-    });
-
-    avg = (allocated > 0) ? Number(flow / allocated) : 0;
-    model.set('avg', avg);
-    console.log('Compute AVG : ' + avg);
-    return avg;
-};
 
 var setLegend = function(allocated){
     console.log('setLegend');
@@ -38,20 +12,26 @@ var setConstSelect = function(model){
     var v = Number(model.get('const'));
     $('option[value="' + v + '"]').attr('selected','selected');
     if (v == 1) {
-        var packages = model.get('packages');
-        packages.forEach(function(item, i, arr){
-            var pack_value = item.get('val') + ' ' + item.get('unit');
-            $('option[value="' + pack_value + '"]').attr('selected','selected');
-        });
+        setBinParamsSelect(model)
     }
+};
+
+var setBinParamsSelect = function(model){
+    var packages = model.get('packages');
+    $('option[value="512 B"]').attr('selected','selected');
+    packages.forEach(function(item, i, arr){
+        var pack_value = item.get('val') + ' ' + item.get('unit');
+        $('option[value="' + pack_value + '"]').attr('selected','selected');
+    });
 };
 
 
 export default Ember.Component.extend({
+    compute: Ember.inject.service('compute-parts'),
     didRender(){
         this._super(...arguments);
         console.log('didrender');
-        var allocated = computeAllocated(this.model);
+        var allocated = this.get('compute').allocated(this.model);
         setLegend(allocated);
         setConstSelect(this.model);
     },
@@ -102,8 +82,9 @@ export default Ember.Component.extend({
                     percent: 100,
                     binsize: this.model
                 });
+                setBinParamsSelect(this.model)
             }
-            computeAVG(this.model);
+            this.get('compute').avg(this.model);
         },
         changePackage: function(){
             console.log('change package params');
@@ -114,9 +95,9 @@ export default Ember.Component.extend({
                 item.set('unit', pack_params[1]);
 //                item.save();
             });
-            computeAVG(this.model);
         },
         saveConfiguration: function(model){
+            this.get('compute').avg(this.model);
             this.model.save().then(function(binsize){
                 console.log('Binsize Saved');
                 var packages = binsize.get('packages'),
