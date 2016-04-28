@@ -1,39 +1,15 @@
 import Ember from 'ember';
 
 
-var setLegend = function(allocated){
-    console.log('setLegend');
-    $('p.allocated span').html(allocated);
-    $('p.available span').html((100 - allocated));
-};
-
-var setConstSelect = function(model){
-    console.log('setConstSelect');
-    var v = Number(model.get('const'));
-    $('option[value="' + v + '"]').attr('selected','selected');
-    if (v == 1) {
-        setBinParamsSelect(model)
-    }
-};
-
-var setBinParamsSelect = function(model){
-    var packages = model.get('packages');
-    $('option[value="512 B"]').attr('selected','selected');
-    packages.forEach(function(item, i, arr){
-        var pack_value = item.get('val') + ' ' + item.get('unit');
-        $('option[value="' + pack_value + '"]').attr('selected','selected');
-    });
-};
-
-
 export default Ember.Component.extend({
+    setUI: Ember.inject.service('set-interface-parts'),
     compute: Ember.inject.service('compute-parts'),
     didRender(){
         this._super(...arguments);
         console.log('didrender');
         var allocated = this.get('compute').allocated(this.model);
-        setLegend(allocated);
-        setConstSelect(this.model);
+        this.get('setUI').setLegend(allocated);
+        this.get('setUI').setConstSelect(this.model);
     },
     actions:{
         addBin: function(){
@@ -82,7 +58,6 @@ export default Ember.Component.extend({
                     percent: 100,
                     binsize: this.model
                 });
-                setBinParamsSelect(this.model)
             }
             this.get('compute').avg(this.model);
         },
