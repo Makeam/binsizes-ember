@@ -6,14 +6,12 @@ export default Ember.Component.extend({
     compute: Ember.inject.service('compute-parts'),
     didRender(){
         this._super(...arguments);
-        console.log('didrender');
         var allocated = this.get('compute').allocated(this.model);
         this.get('setUI').setLegend(allocated);
         this.get('setUI').setConstSelect(this.model);
     },
     actions:{
         addBin: function(){
-            console.log('Add bin');
             var can_save = true;
             var unit = $('select[name="new_package_unit"]').val();
             var val = $('input[name="new_package_val"]').val();
@@ -43,8 +41,6 @@ export default Ember.Component.extend({
             }
         },
         changeType: function(){
-            console.log('change type select component');
-            console.log($('select[name="binsize_const"]').val());
             var binsize_const = $('select[name="binsize_const"]').val();
             this.model.set('const', Boolean(Number(binsize_const)));
             if (binsize_const == 1){
@@ -62,7 +58,6 @@ export default Ember.Component.extend({
             this.get('compute').avg(this.model);
         },
         changePackage: function(){
-            console.log('change package params');
             var pack_params = $('select[name="package_params"]').val().split(' ');
             var packages = this.model.get('packages');
             packages.forEach(function(item,i,arr){

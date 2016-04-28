@@ -2,12 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
     setLegend(allocated){
-        console.log('setLegend');
         $('p.allocated span').html(allocated);
         $('p.available span').html((100 - allocated));
     },
     setConstSelect(model){
-        console.log('setConstSelect');
         var v = Number(model.get('const'));
         $('option[value="' + v + '"]').attr('selected','selected');
         if (v == 1) {

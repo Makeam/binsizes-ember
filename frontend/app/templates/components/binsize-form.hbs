@@ -46,11 +46,15 @@
             <option>KB</option>
             <option>MB</option>
         </select>
-        <button class="btn btn-primary btn-sm" {{action "addBin"}}><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Bin</button>
+        <button class="btn btn-primary btn-sm" {{action "addBin"}}>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Bin
+        </button>
     </div>
 </div>
 <hr>
 {{/unless}}
-<button class="btn btn-primary" {{action "saveConfiguration" model}} > <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save Configuration</button>
+<button class="btn btn-primary" {{action "saveConfiguration" model}} >
+    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save Configuration
+</button>
 <span class="saved badge">Saved</span>
 
