@@ -23,7 +23,6 @@ export default Ember.Service.extend({
 
         avg = (allocated > 0) ? Number(flow / allocated) : 0;
         model.set('avg', avg);
-        console.log('Compute AVG : ' + avg);
         return avg;
     },
     updateSlider(pack, available){
